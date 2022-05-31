@@ -1,3 +1,5 @@
 = Adafruit Macropad RP2040
-https://www.adafruit.com/product/5100
-https://learn.adafruit.com/adafruit-macropad-rp2040
+
+https://www.adafruit.com/product/5100[Product page]
+
+https://learn.adafruit.com/adafruit-macropad-rp2040[Documentation]
