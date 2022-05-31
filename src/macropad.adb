@@ -24,6 +24,23 @@ package body Macropad is
       Set_Mode (SPKR_PWM.Slice, Free_Running);
       Set_Frequency (SPKR_PWM.Slice, PWM_Frequency);
       Enable (SPKR_PWM.Slice);
+
+      OLED_RST.Configure (Output, Pull_Up);
+      OLED_RST.Clear;
+      OLED_DC.Configure (Output, Pull_Up);
+      OLED_CS.Configure (Output, Pull_Up, RP.GPIO.SPI);
+      SCK.Configure (Output, Pull_Up, RP.GPIO.SPI);
+      MOSI.Configure (Output, Floating, RP.GPIO.SPI);
+      MISO.Configure (Output, Floating, RP.GPIO.SPI);
+      --  OLED_SPI.Configure
+      --     ((Role      => Master,
+      --       Baud      => 2_000_000,
+      --       Data_Size => HAL.SPI.Data_Size_8b,
+      --       Polarity  => Active_High,
+      --       Phase     => Rising_Edge,
+      --       Blocking  => True,
+      --       Loopback  => False));
+      --  OLED.Initialize (External_VCC => False);
    end Initialize;
 
    procedure Beep

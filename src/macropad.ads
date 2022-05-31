@@ -4,11 +4,13 @@
 --  SPDX-License-Identifier: BSD-3-Clause
 --
 with RP.GPIO; use RP.GPIO;
-with RP.PWM; use RP.PWM;
-with RP; use RP;
+with RP.PWM;  use RP.PWM;
+with RP.SPI;  use RP.SPI;
+with RP;      use RP;
 with RP.PIO.WS2812;
 with RP.Device;
 with RP.Clock;
+--  with SSD1306;
 
 package Macropad is
    USBBOOT  : aliased GPIO_Point := (Pin => 0);
@@ -48,6 +50,19 @@ package Macropad is
        Number_Of_LEDs => 12);
 
    SPKR_PWM : constant PWM_Point := To_PWM (SPEAKER);
+
+   --  The SH1106 display uses the same protocol as SSD1306
+   OLED_Width  : constant := 128;
+   OLED_Height : constant := 64;
+   OLED_SPI    : SPI_Port renames RP.Device.SPI_1;
+   --  TODO: The SSD1306 package only supports I2C, but this board uses 4-wire SPI
+   --  OLED : SSD1306.SSD1306_Screen
+   --     (Buffer_Size_In_Byte => (OLED_Width * OLED_Height) / 8,
+   --      Width  => OLED_Width,
+   --      Height => OLED_Height,
+   --      Port   => RP.Device.SPI_0'Access,
+   --      RST    => OLED_RST'Access,
+   --      Time   => RP.Device.Timer'Access);
 
    XOSC_Frequency     : constant RP.Clock.XOSC_Hertz  := 12_000_000;
    XOSC_Startup_Delay : constant RP.Clock.XOSC_Cycles := 768_000;

@@ -13,3 +13,5 @@ rp2040_hal = "^1.5.0"
 # http://www.elm-tech.com/ja/products/spi-flash-memory/gd25q64/gd25q64.pdf
 [configuration.values]
 rp2040_hal.Flash_Chip = "generic_qspi"
+[[depends-on]]
+embedded_components = "~0.1.0"
