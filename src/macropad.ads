@@ -4,8 +4,8 @@
 --  SPDX-License-Identifier: BSD-3-Clause
 --
 with RP.GPIO; use RP.GPIO;
-with RP.PWM;  use RP.PWM;
-with RP;      use RP;
+with RP.PWM; use RP.PWM;
+with RP; use RP;
 with RP.PIO.WS2812;
 with RP.Device;
 with RP.Clock;
@@ -41,10 +41,7 @@ package Macropad is
    MOSI     : aliased GPIO_Point := (Pin => 27);
    MISO     : aliased GPIO_Point := (Pin => 28);
 
-   XOSC_Frequency     : constant RP.Clock.XOSC_Hertz  := 12_000_000;
-   XOSC_Startup_Delay : constant RP.Clock.XOSC_Cycles := 768_000;
-
-   Neopixel    : aliased RP.PIO.WS2812.Strip
+   Neopixel : aliased RP.PIO.WS2812.Strip
       (Pin => NEOPIX'Access,
        PIO => RP.Device.PIO_0'Access,
        SM  => 0,
@@ -52,7 +49,11 @@ package Macropad is
 
    SPKR_PWM : constant PWM_Point := To_PWM (SPEAKER);
 
+   XOSC_Frequency     : constant RP.Clock.XOSC_Hertz  := 12_000_000;
+   XOSC_Startup_Delay : constant RP.Clock.XOSC_Cycles := 768_000;
+
    procedure Initialize;
+
    procedure Beep
       (Frequency    : Hertz := 300;
        Milliseconds : Positive := 100)
