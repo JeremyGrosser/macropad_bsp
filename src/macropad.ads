@@ -61,10 +61,10 @@ package Macropad is
 
    procedure Initialize;
 
-   type Keys is range 1 .. 12;
+   type Key is range 1 .. 12;
    type Key_State is (Up, Down);
-   type Key_States is array (Keys) of Key_State;
-   GP : array (Keys) of aliased GPIO_Point;
+   type Key_States is array (Key) of Key_State;
+   GP : array (Key) of aliased GPIO_Point;
 
    function Status
       return Key_States;

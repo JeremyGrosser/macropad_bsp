@@ -30,7 +30,7 @@ package body Macropad is
       Set_Duty_Cycle (SPKR_PWM.Slice, SPKR_PWM.Channel, 16);
       Enable (SPKR_PWM.Slice);
 
-      for K in Keys'Range loop
+      for K in GP'Range loop
          GP (K) := (Pin => GPIO_Pin (K));
          GP (K).Configure (Input, Pull_Up);
       end loop;
