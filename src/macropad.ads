@@ -9,23 +9,13 @@ with RP.SPI;  use RP.SPI;
 with RP;      use RP;
 with RP.PIO.WS2812;
 with RP.Device;
+with RP.Timer;
 with RP.Clock;
 --  with SSD1306;
 
 package Macropad is
    USBBOOT  : aliased GPIO_Point := (Pin => 0);
-   GP1      : aliased GPIO_Point := (Pin => 1);
-   GP2      : aliased GPIO_Point := (Pin => 2);
-   GP3      : aliased GPIO_Point := (Pin => 3);
-   GP4      : aliased GPIO_Point := (Pin => 4);
-   GP5      : aliased GPIO_Point := (Pin => 5);
-   GP6      : aliased GPIO_Point := (Pin => 6);
-   GP7      : aliased GPIO_Point := (Pin => 7);
-   GP8      : aliased GPIO_Point := (Pin => 8);
-   GP9      : aliased GPIO_Point := (Pin => 9);
-   GP10     : aliased GPIO_Point := (Pin => 10);
-   GP11     : aliased GPIO_Point := (Pin => 11);
-   GP12     : aliased GPIO_Point := (Pin => 12);
+   --  GP (1 .. 12)
    LED      : aliased GPIO_Point := (Pin => 13);
    SPKR_SD  : aliased GPIO_Point := (Pin => 14);
 
@@ -67,11 +57,22 @@ package Macropad is
    XOSC_Frequency     : constant RP.Clock.XOSC_Hertz  := 12_000_000;
    XOSC_Startup_Delay : constant RP.Clock.XOSC_Cycles := 768_000;
 
+   Delays : RP.Timer.Delays renames RP.Device.Timer;
+
    procedure Initialize;
 
-   procedure Beep
-      (Frequency    : Hertz := 300;
-       Milliseconds : Positive := 100)
+   type Keys is range 1 .. 12;
+   type Key_State is (Up, Down);
+   type Key_States is array (Keys) of Key_State;
+   GP : array (Keys) of aliased GPIO_Point;
+
+   function Status
+      return Key_States;
+
+   procedure Note_On
+      (Frequency : Hertz := 200)
    with Pre => Frequency in 200 .. 20_000;
+
+   procedure Note_Off;
 
 end Macropad;
